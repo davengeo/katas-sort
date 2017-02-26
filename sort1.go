@@ -63,7 +63,7 @@ func bubbleSort(arr []Any) ([]Any, int) {
 		numberOfIter++;
 		needsMoreIter = false
 
-		for i := 0; i < (len(result) - 1); i++ {
+		for i := 0; i < len(result) - 1; i++ {
 			if (result[i].compare(result[i+1]) == 1) {
 				needsMoreIter = true
 				result[i], result[i+1] = result[i+1], result[i]
@@ -75,8 +75,11 @@ func bubbleSort(arr []Any) ([]Any, int) {
 	return result, numberOfIter
 }
 
-func loadFile(path string ) (lines []Any, numberLines int) {
-	inFile, _ := os.Open(path)
+func loadFile(path string) (lines []Any, numberLines int) {
+	inFile, err := os.Open(path)
+	if err != nil {
+    	fmt.Println(err)
+	}
 	defer inFile.Close()
 	scanner := bufio.NewScanner(inFile)
 	scanner.Split(bufio.ScanLines)
@@ -94,23 +97,25 @@ func printInterval(title string, t time.Time) {
 }
 
 func main() {
-
 	t := time.Now()
 	theArray, lines := loadFile(os.Args[1])
 	printInterval("loadFile", t)
 	fmt.Println("lines:", lines)
 
 	t = time.Now()
-	_, numberOfIter := bubbleSort(theArray[:])
+	result, numberOfIter := bubbleSort(theArray[:])
 	printInterval("bubbleSort", t)
-
-	//printArray(resultArray)
-
-	fmt.Println(numberOfIter)
+	fmt.Println("number of iterations:", numberOfIter)
+	testDescSort(result);
 }
 
-////func printArray(arr []Any) {
-////	for i := 0; i < len(arr); i++ {
-////		fmt.Println(arr[i].value)
-////	}
-//}
+func testDescSort(arr []Any) {
+	for i := 0; i < len(arr) - 1; i++ {
+		if (arr[i].compare(arr[i+1]) == 1) {
+			fmt.Println("Sorting failed!")
+			return
+		}
+	}
+
+	fmt.Println("Sorting succesfull!");
+}
