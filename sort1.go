@@ -75,14 +75,16 @@ func bubbleSort(arr []Any) ([]Any, int) {
 	return result, numberOfIter
 }
 
-func loadFile(path string ) (lines []Any) {
+func loadFile(path string ) (lines []Any, numberLines int) {
 	inFile, _ := os.Open(path)
 	defer inFile.Close()
 	scanner := bufio.NewScanner(inFile)
 	scanner.Split(bufio.ScanLines)
+	numberLines = 0
 
 	for scanner.Scan() {
 		lines = append(lines, NewAny(scanner.Text()))
+		numberLines++
 	}
 	return
 }
@@ -94,8 +96,9 @@ func printInterval(title string, t time.Time) {
 func main() {
 
 	t := time.Now()
-	theArray := loadFile(os.Args[1])
+	theArray, lines := loadFile(os.Args[1])
 	printInterval("loadFile", t)
+	fmt.Println("lines:", lines)
 
 	t = time.Now()
 	_, numberOfIter := bubbleSort(theArray[:])
@@ -106,8 +109,8 @@ func main() {
 	fmt.Println(numberOfIter)
 }
 
-func printArray(arr []Any) {
-	for i := 0; i < len(arr); i++ {
-		fmt.Println(arr[i].value)
-	}
-}
+////func printArray(arr []Any) {
+////	for i := 0; i < len(arr); i++ {
+////		fmt.Println(arr[i].value)
+////	}
+//}
