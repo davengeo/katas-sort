@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strconv"
 	"reflect"
-	//"os"
 	"os"
 	"bufio"
 )
@@ -12,7 +11,7 @@ import (
 
 /*
 	TODO:
-1.  Fill the array from lines in a file
+1.  Fill the array from lines in a file. DONE
 2.  Try to define the big O of the current algorithm using different files
 3.  Beat the bubble-sort with a better performing algorithm
 4.  Unit-test the implementation
@@ -49,12 +48,6 @@ func (v Any) toString() string {
 	} else {
 		return v.value.(string)
 	}
-}
-
-
-
-func addToArray(pos int, value Any, arr []Any) {
-	arr[pos] = value
 }
 
 func bubbleSort(arr []Any) ([]Any, int) {
