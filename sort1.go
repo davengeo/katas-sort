@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"reflect"
 	"os"
 	"bufio"
 	"time"
+	"./impl"
 )
 
 
@@ -19,63 +18,10 @@ import (
 
 */
 
-type Any struct {
-	value interface{}
-}
 
-func NewAny(value interface{}) Any {
-	any := new(Any)
-	any.value = value
-	return *any
-}
 
-func (first Any) compare (second Any) int {
-	strFirst := first.toString()
-	strSecond := second.toString()
 
-	if (strFirst > strSecond) {
-		return 1
-	}
-	if (strFirst < strSecond){
-		return -1
-	}
-	return 0
-
-}
-
-func (v Any) toString() string {
-	if (reflect.TypeOf(v.value).Kind() == reflect.Int) {
-		return strconv.Itoa(v.value.(int))
-	} else {
-		return v.value.(string)
-	}
-}
-
-func bubbleSort(arr []Any) ([]Any, int) {
-	var result = make([]Any, len(arr))
-	copy(result[:], arr)
-
-	needsMoreIter := true
-	numberOfIter := 0
-
-	for needsMoreIter {
-
-		numberOfIter++;
-		needsMoreIter = false
-
-		for i := 0; i < (len(result) - 1); i++ {
-			if (result[i].compare(result[i+1]) == 1) {
-				needsMoreIter = true
-				result[i], result[i+1] = result[i+1], result[i]
-			}
-		}
-
-	}
-
-	return result, numberOfIter
-}
-
-func loadFile(path string ) (lines []Any, numberLines int) {
+func loadFile(path string ) (lines []impl.Any, numberLines int) {
 	inFile, _ := os.Open(path)
 	defer inFile.Close()
 	scanner := bufio.NewScanner(inFile)
@@ -83,11 +29,13 @@ func loadFile(path string ) (lines []Any, numberLines int) {
 	numberLines = 0
 
 	for scanner.Scan() {
-		lines = append(lines, NewAny(scanner.Text()))
+		lines = append(lines, impl.NewAny(scanner.Text()))
 		numberLines++
 	}
 	return
 }
+
+
 
 func printInterval(title string, t time.Time) {
 	fmt.Printf("%s:%s \n", title, time.Now().Sub(t).String())
@@ -101,16 +49,20 @@ func main() {
 	fmt.Println("lines:", lines)
 
 	t = time.Now()
-	_, numberOfIter := bubbleSort(theArray[:])
+	result, numberOfIter := impl.BubbleSort(theArray[:])
 	printInterval("bubbleSort", t)
 
 	//printArray(resultArray)
 
-	fmt.Println(numberOfIter)
+	fmt.Println("iters:",numberOfIter)
+
+	fmt.Println("sorted:",impl.IsSorted(result))
 }
 
-////func printArray(arr []Any) {
-////	for i := 0; i < len(arr); i++ {
-////		fmt.Println(arr[i].value)
-////	}
+
+
+//func printArray(arr []Any) {
+//	for i := 0; i < len(arr); i++ {
+//		fmt.Println(arr[i].value)
+//	}
 //}
