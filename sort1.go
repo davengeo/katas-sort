@@ -81,28 +81,22 @@ func bubbleSort(arr []Any) ([]Any, int) {
 	return result, numberOfIter
 }
 
-
-
-func main() {
-
-	path := os.Args[1]
+func fillWithFile(path string ) (lines []Any) {
 	inFile, _ := os.Open(path)
 	defer inFile.Close()
 	scanner := bufio.NewScanner(inFile)
 	scanner.Split(bufio.ScanLines)
 
 	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+		lines = append(lines, NewAny(scanner.Text()))
 	}
+	return
+}
 
-	var theArray [6]Any
 
-	addToArray(0, NewAny(300), theArray[:])
-	addToArray(1, NewAny(2), theArray[:])
-	addToArray(2, NewAny("b"), theArray[:])
-	addToArray(3, NewAny(58), theArray[:])
-	addToArray(4, NewAny("a"), theArray[:])
-	addToArray(5, NewAny("a23"), theArray[:])
+func main() {
+
+	theArray := fillWithFile(os.Args[1])
 
 	resultArray, numberOfIter := bubbleSort(theArray[:])
 
