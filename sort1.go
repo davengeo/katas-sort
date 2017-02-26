@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"os"
 	"bufio"
+	"time"
 )
 
 
@@ -86,14 +87,22 @@ func fillWithFile(path string ) (lines []Any) {
 	return
 }
 
+func printInterval(t time.Time) {
+	fmt.Println(time.Now().Sub(t).String())
+}
 
 func main() {
 
+	t := time.Now()
 	theArray := fillWithFile(os.Args[1])
+	printInterval(t)
 
-	resultArray, numberOfIter := bubbleSort(theArray[:])
+	t = time.Now()
+	_, numberOfIter := bubbleSort(theArray[:])
+	printInterval(t)
 
-	printArray(resultArray)
+	//printArray(resultArray)
+
 	fmt.Println(numberOfIter)
 }
 
