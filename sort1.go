@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"time"
 	"./impl"
+	"./report"
 )
 
 
@@ -14,13 +15,8 @@ import (
 1.  Fill the array from lines in a file. DONE
 2.  Try to define the big O of the current algorithm using different files
 3.  Beat the bubble-sort with a better performing algorithm
-4.  Unit-test the implementation
 
 */
-
-
-
-
 func loadFile(path string ) (lines []impl.Any, numberLines int) {
 	inFile, _ := os.Open(path)
 	defer inFile.Close()
@@ -42,7 +38,7 @@ func printInterval(title string, t time.Time) {
 }
 
 func main() {
-
+	r := report.NewReport()
 	t := time.Now()
 	theArray, lines := loadFile(os.Args[1])
 	printInterval("loadFile", t)
@@ -57,6 +53,7 @@ func main() {
 	fmt.Println("iters:",numberOfIter)
 
 	fmt.Println("sorted:",impl.IsSorted(result))
+	r.WriteItem()
 }
 
 
