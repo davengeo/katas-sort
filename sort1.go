@@ -61,8 +61,4 @@ func main() {
 
 
 
-//func printArray(arr []Any) {
-//	for i := 0; i < len(arr); i++ {
-//		fmt.Println(arr[i].value)
-//	}
-//}
+
