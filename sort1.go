@@ -38,8 +38,10 @@ func printInterval(title string, t time.Time) {
 }
 
 func main() {
-	r := report.NewReport()
+	r := report.NewReport("dummy", "dummy.csv")
 	t := time.Now()
+
+
 	theArray, lines := loadFile(os.Args[1])
 	printInterval("loadFile", t)
 	fmt.Println("lines:", lines)
@@ -53,7 +55,9 @@ func main() {
 	fmt.Println("iters:",numberOfIter)
 
 	fmt.Println("sorted:",impl.IsSorted(result))
-	r.WriteItem()
+
+	r.AddItem("bubble", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(result))
+	r.Write()
 }
 
 
