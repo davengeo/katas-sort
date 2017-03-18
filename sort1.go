@@ -47,8 +47,9 @@ func main() {
 	fmt.Println("lines:", lines)
 
 	t = time.Now()
-	result, numberOfIter := impl.BubbleSort(theArray[:])
-	printInterval("bubbleSort", t)
+	//result, numberOfIter := impl.BubbleSort(theArray[:])
+	result, numberOfIter := impl.TreeSort(theArray[:])
+	printInterval("treeSort", t)
 
 	//printArray(resultArray)
 
@@ -57,7 +58,7 @@ func main() {
 	fmt.Println("sorted:",impl.IsSorted(result))
 
 	r.AddItem("bubble", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(result))
-	r.Write()
+	r.WriteToFile()
 }
 
 

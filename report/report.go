@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"bufio"
 	"fmt"
+	"github.com/labstack/gommon/log"
 )
 
 type ReportItem struct {
@@ -44,8 +45,9 @@ func (i *ReportItem) toString() string {
 	return strings.Join(parts[:], ";")
 }
 
-func (r *Report) Write() {
-	f, _ := os.OpenFile(r.filename, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+func (r *Report) WriteToFile() {
+	f, err := os.OpenFile(r.filename, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+	check(err)
 	w := bufio.NewWriter(f)
 	defer f.Close()
 	defer w.Flush()
@@ -53,4 +55,10 @@ func (r *Report) Write() {
 		fmt.Fprintf(w, "%s\n", r.items[i].toString())
 	}
 	f.Sync()
+}
+
+func check(err error) {
+	if err != nil {
+		log.Errorf("%s", err)
+	}
 }
