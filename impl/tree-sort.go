@@ -1,3 +1,8 @@
+/*
+
+This was made by Antons but it doesnt work, his email is akranga@gmail.com
+
+ */
 package impl
 
 import "fmt"
