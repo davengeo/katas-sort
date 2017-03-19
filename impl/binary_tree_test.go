@@ -35,19 +35,19 @@ func TestShouldCreateFreshBinaryTree(t *testing.T) {
 	assert.Equal(t, extreme.value, mathieu.value)
 	assert.Equal(t, parent.value, fidan.value)
 
-	resultArr := flatRight(root, make([]string, 0))
-	assert.Equal(t, resultArr[0], "Mathieu")
-	assert.Equal(t, resultArr[1], "Florian")
-	assert.Equal(t, resultArr[2], "Fidan")
-	assert.Equal(t, resultArr[3], "Deniss")
+	right := flatRight(root, make([]string, 0))
+	assert.Equal(t, right[0], "Mathieu")
+	assert.Equal(t, right[1], "Florian")
+	assert.Equal(t, right[2], "Fidan")
+	assert.Equal(t, right[3], "Deniss")
 
-	resultArr2 := flatLeft(root, make([]string, 0))
-	assert.Equal(t, resultArr2[0], "David")
-	assert.Equal(t, len(resultArr2), 1)
+	left := flatLeft(root, make([]string, 0))
+	assert.Equal(t, left[0], "David")
+	assert.Equal(t, len(left), 1)
 
-	reverse(resultArr)
-	printArray(append(resultArr2, resultArr...))
+	reverse(right)
+	printArray(append(left, right...))
 
-	arr, _ := sortTree([]string{"David", "Olli", "Evegenijs", "Antons", "Ivo"})
+	arr, _ := SortTree([]string{"Zorba", "David", "Olli", "Evegenijs", "David", "Antons", "Ivo", "Deniss"})
 	printArray(arr)
 }

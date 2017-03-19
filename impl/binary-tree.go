@@ -3,13 +3,13 @@ package impl
 import "fmt"
 
 type BinaryTree struct {
-	value string
+	value       string
 	left, right *BinaryTree
 }
 
 func newNode(k string) *BinaryTree {
 	result := new(BinaryTree)
-	result.value=k
+	result.value = k
 	return result
 }
 
@@ -32,31 +32,27 @@ func (me *BinaryTree) greater(node *BinaryTree) (int) {
 }
 
 func (me *BinaryTree) place(node *BinaryTree) {
-	if (me.greater(node) == 1 && me.left == nil) {
-		me.insertLeft(node)
-		return
-	}
 	if (me.greater(node) == 1) {
-		me.left.place(node)
-		return
-	}
-	if (me.greater(node) == -1 && me.right == nil) {
-		me.insertRight(node)
+		if (me.left == nil) {
+			me.insertLeft(node)
+		} else {
+			me.left.place(node)
+		}
 		return
 	}
 	if (me.greater(node) == -1) {
-		me.right.place(node)
-		return
-	}
-	if (me.greater(node) == 0) {
 		if (me.right == nil) {
 			me.insertRight(node)
-			return
+		} else {
+			me.right.place(node)
 		}
-		if (me.left == nil) {
-			me.insertLeft(node)
-			return
-		}
+		return
+	}
+	if (me.right == nil) {
+		me.insertRight(node)
+	} else if (me.left == nil) {
+		me.insertLeft(node)
+	} else {
 		me.right.place(node)
 	}
 }
@@ -94,12 +90,12 @@ func flatLeft(me *BinaryTree, arr []string) ([]string) {
 }
 
 func reverse(arr []string) {
-	for i, j := 0, len(arr) -1; i < j; i, j = i + 1, j -1 {
+	for i, j := 0, len(arr) - 1; i < j; i, j = i + 1, j - 1 {
 		arr[i], arr[j] = arr[j], arr[i]
 	}
 }
 
-func sortTree(arr []string) ([]string, int)  {
+func SortTree(arr []string) ([]string, int) {
 	root := newNode(arr[0])
 	for i := 1; i < len(arr); i++ {
 		root.place(newNode(arr[i]))
@@ -107,13 +103,12 @@ func sortTree(arr []string) ([]string, int)  {
 	right := flatRight(root, make([]string, 0))
 	left := flatLeft(root, make([]string, 0))
 	reverse(right)
-
 	return append(left, right...), -1
 }
 
 func printArray(arr []string) {
-	fmt.Println("*****")
-	for i := 0; i< len(arr); i++ {
+	fmt.Println("*********")
+	for i := 0; i < len(arr); i++ {
 		fmt.Println(arr[i])
 	}
 }
