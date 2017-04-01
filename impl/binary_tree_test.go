@@ -6,7 +6,7 @@ import (
 )
 
 func TestShouldCreateFreshBinaryTree(t *testing.T) {
-	root := newNode("Deniss")
+	root:=newNode("Deniss")
 	assert.Nil(t, root.left)
 	assert.Nil(t, root.right)
 	assert.Equal(t, "Deniss", root.value)
@@ -35,13 +35,13 @@ func TestShouldCreateFreshBinaryTree(t *testing.T) {
 	assert.Equal(t, extreme.value, mathieu.value)
 	assert.Equal(t, parent.value, fidan.value)
 
-	right := flatRight(root, make([]string, 0))
+	right:=flatRight(root, make([]string, 0))
 	assert.Equal(t, right[0], "Mathieu")
 	assert.Equal(t, right[1], "Florian")
 	assert.Equal(t, right[2], "Fidan")
 	assert.Equal(t, right[3], "Deniss")
 
-	left := flatLeft(root, make([]string, 0))
+	left:=flatLeft(root, make([]string, 0))
 	assert.Equal(t, left[0], "David")
 	assert.Equal(t, len(left), 1)
 

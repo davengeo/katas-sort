@@ -10,14 +10,8 @@ import (
 )
 
 
-/*
-	TODO:
-1.  Fill the array from lines in a file. DONE
-2.  Try to define the big O of the current algorithm using different files
-3.  Beat the bubble-sort with a better performing algorithm
 
-*/
-func loadFile(path string ) (lines []impl.Any, numberLines int) {
+func loadFile(path string ) (lines []string, numberLines int) {
 	inFile, _ := os.Open(path)
 	defer inFile.Close()
 	scanner := bufio.NewScanner(inFile)
@@ -25,7 +19,7 @@ func loadFile(path string ) (lines []impl.Any, numberLines int) {
 	numberLines = 0
 
 	for scanner.Scan() {
-		lines = append(lines, impl.NewAny(scanner.Text()))
+		lines = append(lines, scanner.Text())
 		numberLines++
 	}
 	return
@@ -47,17 +41,22 @@ func main() {
 	fmt.Println("lines:", lines)
 
 	t = time.Now()
-	//result, numberOfIter := impl.BubbleSort(theArray[:])
-	result, numberOfIter := impl.TreeSort(theArray[:])
+
+	resultBubble, _ := impl.BubbleSort(theArray[:])
+
+	printInterval("bubbleSort", t)
+	fmt.Println("sorted:",impl.IsSorted(resultBubble))
+
+	r.AddItem("bubble", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultBubble))
+
+	t = time.Now()
+	resultTree, _ := impl.SortTree(theArray[:])
+
 	printInterval("treeSort", t)
+	fmt.Println("sorted:",impl.IsSorted(resultTree))
 
-	//printArray(resultArray)
+	r.AddItem("tree", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultTree))
 
-	fmt.Println("iters:",numberOfIter)
-
-	fmt.Println("sorted:",impl.IsSorted(result))
-
-	r.AddItem("bubble", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(result))
 	r.WriteToFile()
 }
 
