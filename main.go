@@ -55,11 +55,19 @@ func main() {
 	printInterval("treeSort", t)
 	fmt.Println("sorted:",impl.IsSorted(resultTree))
 
+	//printArray(resultTree)
+
 	r.AddItem("tree", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultTree))
 
 	r.WriteToFile()
 }
 
+func printArray(arr []string) {
+	fmt.Println("*********")
+	for i := 0; i < len(arr); i++ {
+		fmt.Println(arr[i])
+	}
+}
 
 
 
