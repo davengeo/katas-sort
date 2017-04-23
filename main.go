@@ -59,6 +59,16 @@ func main() {
 
 	r.AddItem("tree", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultTree))
 
+	t = time.Now()
+	resultQuick, _ := impl.QuickSort(theArray[:])
+
+	printInterval("quickSort", t)
+	fmt.Println("sorted:", impl.IsSorted(resultQuick))
+
+	//printArray(resultQuick)
+
+	r.AddItem("quick", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultQuick))
+
 	r.WriteToFile()
 }
 

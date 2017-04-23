@@ -1,41 +1,31 @@
 package impl
 
-import "fmt"
 
 func QuickSort(arr []string) ([]string, int) {
-	if isSorted(arr) {
-		return arr, -1
+	doQuicksort(arr, 1, len(arr)-1)
+	return arr, -1
+}
+
+func doQuicksort(arr []string, lo int, hi int) {
+	//fmt.Println("call 1")
+	if (lo < hi) {
+		p := calculatePivot(arr, lo, hi)
+		doQuicksort(arr, lo, p - 1)
+		doQuicksort(arr, p + 1, hi)
 	}
-	pvt:=calculatePivot(arr)
-	fmt.Println(arr[pvt])
-	left, right:=getLeftRight(arr, pvt)
-	return QuickSort(append(left, right...))
 }
 
-func calculatePivot(arr []string) (int) {
-	return (len(arr)/2 -1)
-}
-
-
-func getLeftRight(arr []string, pvt int) (left []string, right []string) {
-	left=make([]string, 0)
-	right=make([]string, 0)
-
-	for i:=0; i<len(arr); i++ {
-		if(arr[i] > arr[pvt]) {
-			right=append(right, arr[i])
-		} else {
-			left=append(left, arr[i])
+func calculatePivot(arr []string, lo int, hi int) (int) {
+	pivot:= arr[hi]
+	i:= lo - 1
+	for j:= lo; j < hi-1; j++ {
+		if arr[j] <= pivot {
+			i++
+			arr[j], arr[i] = arr[i], arr[j]
 		}
 	}
-	return left, right
+	arr[i + 1], arr[hi] = arr[hi], arr[i + 1]
+	return i + 1
 }
 
-func isSorted(arr []string) bool {
-	for i := 0; i < (len(arr) - 1); i++ {
-		if (arr[i] > arr[i+1]) {
-			return false
-		}
-	}
-	return true
-}
+
