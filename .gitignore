@@ -20,9 +20,9 @@
 
 # User-specific stuff:
 .idea/
-
-
-
+bin/
+pkg/
+src/
 
 ## File-based project format:
 *.iws

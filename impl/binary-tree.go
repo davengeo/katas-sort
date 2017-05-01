@@ -1,7 +1,5 @@
 package impl
 
-import "fmt"
-
 type BinaryTree struct {
 	value       string
 	left, right *BinaryTree
@@ -21,36 +19,36 @@ func (me *BinaryTree) insertLeft(node *BinaryTree) {
 	me.left = node
 }
 
-func (me *BinaryTree) greater(node *BinaryTree) (int) {
-	if (me.value > node.value) {
+func (me *BinaryTree) greater(node *BinaryTree) int {
+	if me.value > node.value {
 		return 1
 	}
-	if (me.value < node.value) {
+	if me.value < node.value {
 		return -1
 	}
 	return 0
 }
 
 func (me *BinaryTree) place(node *BinaryTree) {
-	if (me.greater(node) == 1) {
-		if (me.left == nil) {
+	if me.greater(node) == 1 {
+		if me.left == nil {
 			me.insertLeft(node)
 		} else {
 			me.left.place(node)
 		}
 		return
 	}
-	if (me.greater(node) == -1) {
-		if (me.right == nil) {
+	if me.greater(node) == -1 {
+		if me.right == nil {
 			me.insertRight(node)
 		} else {
 			me.right.place(node)
 		}
 		return
 	}
-	if (me.right == nil) {
+	if me.right == nil {
 		me.insertRight(node)
-	} else if (me.left == nil) {
+	} else if me.left == nil {
 		me.insertLeft(node)
 	} else {
 		me.right.place(node)
@@ -58,15 +56,15 @@ func (me *BinaryTree) place(node *BinaryTree) {
 }
 
 func findExtremeRight(me *BinaryTree, parent *BinaryTree) (*BinaryTree, *BinaryTree) {
-	if (me.right == nil) {
+	if me.right == nil {
 		return me, parent
 	}
 	return findExtremeRight(me.right, me)
 }
 
-func flatRight(me *BinaryTree, arr []string) ([]string) {
+func flatRight(me *BinaryTree, arr []string) []string {
 	extreme, parent := findExtremeRight(me, nil)
-	if (parent == nil) {
+	if parent == nil {
 		return append(arr, extreme.value)
 	}
 	parent.right = extreme.left
@@ -74,15 +72,15 @@ func flatRight(me *BinaryTree, arr []string) ([]string) {
 }
 
 func findExtremeLeft(me *BinaryTree, parent *BinaryTree) (*BinaryTree, *BinaryTree) {
-	if (me.left == nil) {
+	if me.left == nil {
 		return me, parent
 	}
 	return findExtremeLeft(me.left, me)
 }
 
-func flatLeft(me *BinaryTree, arr []string) ([]string) {
+func flatLeft(me *BinaryTree, arr []string) []string {
 	extreme, parent := findExtremeLeft(me, nil)
-	if (parent == nil) {
+	if parent == nil {
 		return arr
 	}
 	parent.left = extreme.right
@@ -90,7 +88,7 @@ func flatLeft(me *BinaryTree, arr []string) ([]string) {
 }
 
 func reverse(arr []string) {
-	for i, j := 0, len(arr) - 1; i < j; i, j = i + 1, j - 1 {
+	for i, j := 0, len(arr)-1; i < j; i, j = i+1, j-1 {
 		arr[i], arr[j] = arr[j], arr[i]
 	}
 }
@@ -105,14 +103,3 @@ func SortTree(arr []string) ([]string, int) {
 	reverse(right)
 	return append(left, right...), -1
 }
-
-func printArray(arr []string) {
-	fmt.Println("*********")
-	for i := 0; i < len(arr); i++ {
-		fmt.Println(arr[i])
-	}
-}
-
-
-
-
