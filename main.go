@@ -1,17 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"bufio"
-	"time"
 	"./impl"
 	"./report"
+	"bufio"
+	"fmt"
+	"os"
+	"time"
 )
 
-
-
-func loadFile(path string ) (lines []string, numberLines int) {
+func loadFile(path string) (lines []string, numberLines int) {
 	inFile, _ := os.Open(path)
 	defer inFile.Close()
 	scanner := bufio.NewScanner(inFile)
@@ -25,8 +23,6 @@ func loadFile(path string ) (lines []string, numberLines int) {
 	return
 }
 
-
-
 func printInterval(title string, t time.Time) {
 	fmt.Printf("%s:%s \n", title, time.Now().Sub(t).String())
 }
@@ -34,7 +30,6 @@ func printInterval(title string, t time.Time) {
 func main() {
 	r := report.NewReport("dummy", "dummy.csv")
 	t := time.Now()
-
 
 	theArray, lines := loadFile(os.Args[1])
 	printInterval("loadFile", t)
@@ -45,7 +40,7 @@ func main() {
 	resultBubble, _ := impl.BubbleSort(theArray[:])
 
 	printInterval("bubbleSort", t)
-	fmt.Println("sorted:",impl.IsSorted(resultBubble))
+	fmt.Println("sorted:", impl.IsSorted(resultBubble))
 
 	r.AddItem("bubble", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultBubble))
 
@@ -53,9 +48,7 @@ func main() {
 	resultTree, _ := impl.SortTree(theArray[:])
 
 	printInterval("treeSort", t)
-	fmt.Println("sorted:",impl.IsSorted(resultTree))
-
-	//printArray(resultTree)
+	fmt.Println("sorted:", impl.IsSorted(resultTree))
 
 	r.AddItem("tree", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultTree))
 
@@ -65,19 +58,15 @@ func main() {
 	printInterval("quickSort", t)
 	fmt.Println("sorted:", impl.IsSorted(resultQuick))
 
-	//printArray(resultQuick)
-
 	r.AddItem("quick", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultQuick))
+
+	t = time.Now()
+	resultMerge, _ := impl.MergeSort(theArray[:])
+
+	printInterval("mergeSort", t)
+	fmt.Println("sorted:", impl.IsSorted(resultMerge))
+
+	r.AddItem("merge", os.Args[1], lines, time.Now().Sub(t).Nanoseconds(), impl.IsSorted(resultMerge))
 
 	r.WriteToFile()
 }
-
-func printArray(arr []string) {
-	fmt.Println("*********")
-	for i := 0; i < len(arr); i++ {
-		fmt.Println(arr[i])
-	}
-}
-
-
-
